@@ -22,7 +22,7 @@ class UsersViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['GET'])
     def get_user(self, request):
-        """ if user_id parametr is given then return info for this user else return info for current user  """
+        """ if user_id parameter is given then return info for this user else return info for current user  """
         try:
             user_id = request.GET.get('user_id')
             if user_id is None:
@@ -100,14 +100,14 @@ class FriendsViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['GET'])
     def get_friends(self, request):
         """
-        if user_id parametr is given then return a list of friends for this user else return list of friends for current user
+        if user_id parameter is given then return a list of friends for this user else return list of friends for current user
         """
         try:
             user_id = request.GET.get('user_id')
             if user_id is None:
-                user = self.queryset.get(username=request.user)
+                user = User.objects.get(username=request.user)
             else:
-                user = self.queryset.get(id=user_id)
+                user = User.objects.get(id=user_id)
 
             friends = Friendship.objects.filter(from_user=user)
             friends_serializer = FriendsSerializer(friends, many=True)
