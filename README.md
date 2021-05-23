@@ -1,5 +1,5 @@
 # jb-task
-
+[![Build Status](https://travis-ci.com/tanya124/jb-task.png?branch=master)](https://travis-ci.org/tanya124/jb-task)
 ***
 ## API Documentation
 
