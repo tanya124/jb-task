@@ -15,5 +15,3 @@ class FriendsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Friendship
         fields = ['to_user', 'created_date']
-
-

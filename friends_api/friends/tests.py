@@ -1,10 +1,10 @@
 from django.test import TestCase, Client
 from .factories import UserFactory
-from django.urls import reverse
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 import json
 from .models import Friendship
+
 
 class UserTest(TestCase):
     def setUp(self):

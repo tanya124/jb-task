@@ -3,9 +3,7 @@ from .serializers import UserSerializer, FriendsSerializer
 from .models import Friendship
 from django.contrib.auth.models import User
 from rest_framework.response import Response
-from rest_framework.decorators import action, api_view, permission_classes
-from django.core.exceptions import ValidationError
-from .exceptions import FriendshipExistsError
+from rest_framework.decorators import action
 from django.db.models import Q
 
 
@@ -22,7 +20,11 @@ class UsersViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['GET'])
     def get_user(self, request):
-        """ if user_id parameter is given then return info for this user else return info for current user  """
+        """
+        If user_id parameter is given then
+        return info for this user
+        else return info for current user
+        """
         try:
             user_id = request.GET.get('user_id')
             if user_id is None:
@@ -33,8 +35,8 @@ class UsersViewSet(viewsets.ModelViewSet):
             serializer = UserSerializer(user, many=False)
             return Response(serializer.data)
         except User.DoesNotExist:
-            return Response({'status': 'error', 'message': 'user does not exist'}, status.HTTP_400_BAD_REQUEST)
-
+            response_body = {'status': 'error', 'message': 'user does not exist'}
+            return Response(response_body, status.HTTP_400_BAD_REQUEST)
 
 
 class FriendsViewSet(viewsets.ModelViewSet):
@@ -51,17 +53,20 @@ class FriendsViewSet(viewsets.ModelViewSet):
             to_user = User.objects.get(id=to_user_id)
 
             if from_user == to_user:
-                response_body = {'status': 'error', 'message': 'Users cannot be friend with themselves'}
+                response_body = {
+                    'status': 'error',
+                    'message': 'Users cannot be friend with themselves'
+                }
                 return Response(response_body, status.HTTP_400_BAD_REQUEST)
 
             if self.queryset.filter(from_user=from_user, to_user=to_user).exists():
                 response_body = {'status': 'error', 'message': 'Users are friends'}
                 return Response(response_body, status.HTTP_400_BAD_REQUEST)
 
-            object, created1 = Friendship.objects.get_or_create(
+            friendship, created1 = Friendship.objects.get_or_create(
                 from_user=from_user, to_user=to_user
             )
-            object, created2 = Friendship.objects.get_or_create(
+            friendship, created2 = Friendship.objects.get_or_create(
                 from_user=to_user, to_user=from_user
             )
             if created1 is False or created2 is False :
@@ -100,7 +105,9 @@ class FriendsViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['GET'])
     def get_friends(self, request):
         """
-        if user_id parameter is given then return a list of friends for this user else return list of friends for current user
+        if user_id parameter is given then
+        return a list of friends for this user
+        else return list of friends for current user
         """
         try:
             user_id = request.GET.get('user_id')
@@ -118,7 +125,9 @@ class FriendsViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['GET'])
     def get_friends_of_friends(self, request):
-        """ Return a list of possible friends of the current user"""
+        """
+        Return a list of possible friends of the current user
+        """
         user = User.objects.get(username=request.user)
         friends = self.queryset.values('to_user').filter(from_user=user)
         result_set_of_friends = self.queryset.none()

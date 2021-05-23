@@ -20,6 +20,3 @@ class Friendship(models.Model):
         verbose_name = "Friendship"
         verbose_name_plural = "Friendships"
         unique_together = ("from_user", "to_user")
-
-    def __str__(self):
-        return "%s" % self.from_user_id
