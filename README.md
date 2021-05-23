@@ -27,13 +27,13 @@
 
 * GET /v1/users/user_list
     - Response: [ user ]
-    - Response code: (200,...)
+    - Response code: (200, 401)
     - Description: return a list of all users
   
 * GET /v1/users/get_user/?user_id=<+/->
     - Response: user
-    - Response code: (200, ...)
-    - Desription: if user_id parametr is given then return info for this user else return info for current user **ПОФИКСИТЬ**
+    - Response code: (200, 400, 401)
+    - Desription: if user_id parametr is given then return info for this user else return info for current user
 
     
 * POST /v1/friends/add_friend/
@@ -50,10 +50,10 @@
       "message": "<>"
     }
     ```
-    - Response code: (200, 400, ...)
+    - Response code: (200, 400, 401)
     - Description: create friendship request
 
-* POST /v1/friends/delete_friend/
+* DELETE /v1/friends/delete_friend/
     - Request:
     ```json
     { 
@@ -67,7 +67,7 @@
       "message": "<>"
     }
     ```
-    - Response code: (200, 400, ...)
+    - Response code: (200, 400, 401)
     - Description: delete friendship request
 
 * GET /v1/friends/get_friends/?user_id=<+/->
@@ -80,22 +80,14 @@
       }
     ]
     ```
-    - Response code: (200, ...)
-    - Desription: if user_id parametr is given then return a list of friends for this user else return list of friends for current user **ПОФИКСИТЬ**
+    - Response code: (200, 400, 401)
+    - Desription: if user_id parametr is given then return a list of friends for this user else return list of friends for current user
 
 
-* GET /v1/friends/get_friends/?user_id=<+/->
-    - Response: 
-    ```json
-    [
-      {
-        "to_user": "user",
-        "created_date": "<>"
-      }
-    ]
-    ```
-    - Response code: (200, ...)
-    - Desription: if user_id parametr is given then return a list of friends for this user else return list of friends for current user **ПОФИКСИТЬ**
+* GET /v1/friends/get_friends_of_friends/
+    - Response: [ user ]
+    - Response code: (200, 400, 401)
+    - Desription: Return a list of possible friends of the current user
 
 * POST /v1/auth/registration/
     - Request:
