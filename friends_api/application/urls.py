@@ -1,4 +1,4 @@
-"""friends_api URL Configuration
+"""application URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -18,6 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('v1/', include('friends.urls')),
     path('v1/auth/', include('rest_auth.urls')),
-    path('v1/auth/registration/', include('rest_auth.registration.urls'))
+    path('v1/auth/registration/', include('rest_auth.registration.urls')),
 ]
