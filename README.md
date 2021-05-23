@@ -1,6 +1,20 @@
 # jb-task
 [![Build Status](https://travis-ci.com/tanya124/jb-task.svg?token=zf2uWSvzpsZfMbeLjp5N&branch=main)](https://travis-ci.com/tanya124/jb-task)
 ***
+## Run (Linux)
+```bash
+chmod +x setup.sh
+./setup.sh
+
+# run server
+./manage.py runserver
+
+# run tests
+./manage.py test
+```
+
+
+***
 ## API Documentation
 
 **Definitions:**
